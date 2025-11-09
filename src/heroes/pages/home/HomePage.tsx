@@ -16,7 +16,7 @@ export const HomePage = () => {
   const [activeTab, setActiveTab] = useState<
     'all' | 'favorites' | 'heroes' | 'villains'>('all');
 
-    const {data} = useQuery({
+    const {data: heroesResponse} = useQuery({
       queryKey: ['heroes'],
       queryFn: () => getHeroesByPageAction(),
       staleTime: 1000 * 60 * 5,
@@ -52,22 +52,22 @@ export const HomePage = () => {
     
             <TabsContent value="all">
               <h1> All charapters </h1>
-                <HeroGrid />
+                <HeroGrid heroes={heroesResponse?.heroes ?? []}/>
             </TabsContent>
 
             <TabsContent value="favorites">
               <h1> Favorites </h1>
-                <HeroGrid />
+                <HeroGrid heroes={[]}/>
             </TabsContent>
 
             <TabsContent value="heroes">
               <h1> Heroes </h1>
-                <HeroGrid />
+                <HeroGrid heroes={[]}/>
             </TabsContent>
 
             <TabsContent value="villains">
               <h1> Villains </h1>
-                <HeroGrid />
+                <HeroGrid heroes={[]}/>
             </TabsContent>
       </Tabs>
 
