@@ -7,7 +7,6 @@ const queryClient = new QueryClient()
 
 export const HeroesApp = () => {
     
-  
   return (
     <QueryClientProvider client={queryClient}>
           <RouterProvider router={appRouter}/>
