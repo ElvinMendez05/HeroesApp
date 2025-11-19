@@ -1,6 +1,6 @@
 
 import { useSearchParams } from "react-router"
-import { useMemo } from "react"
+import { use, useMemo } from "react"
 
 import { Heart,} from "lucide-react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
@@ -12,9 +12,12 @@ import { CustomBreadcrumbs } from "@/components/custom/CustomBreadcrumbs"
 
 import { useHeroSummary } from "@/heroes/hooks/useHeroSummary"
 import { usePaginatedHero } from "@/heroes/hooks/usePaginatedHero"
+import { FavoriteHeroContext } from "@/heroes/context/FavoriteHeroContext"
 
 
 export const HomePage = () => {
+
+  const {favoriteCount, favorites} = use(FavoriteHeroContext)
   
   //searchParam 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -64,7 +67,7 @@ export const HomePage = () => {
             })}
             >
               <Heart className="h-4 w-4" />
-              Favorites (3)
+              Favorites ({favoriteCount})
             </TabsTrigger>
 
             <TabsTrigger value="heroes" onClick={() => setSearchParams((prev) => {
@@ -91,7 +94,7 @@ export const HomePage = () => {
 
             <TabsContent value="favorites">
               <h1> Favorites </h1>
-                <HeroGrid heroes={[]}/>
+                <HeroGrid heroes={favorites}/>
             </TabsContent>
 
             <TabsContent value="heroes">
@@ -106,7 +109,9 @@ export const HomePage = () => {
       </Tabs>
 
         {/* Pagination */}
-        <CustomPagination totalPage={heroesResponse?.pages ?? 1}/>
+        {selectedTab !== 'favorites' && (
+           <CustomPagination totalPage={heroesResponse?.pages ?? 1}/>
+        )}
       </>
     </>
   )

@@ -7,7 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Shield, Zap, Brain, Gauge, Users, Star, Award } from "lucide-react"
 
 import { Navigate, useParams } from "react-router"
-import { getHero } from "@/heroes/actions/get-hero";
+import { getHero } from "@/heroes/actions/get-hero.action";
+
 
 export const HeroPage = () => {
   
@@ -19,7 +20,7 @@ export const HeroPage = () => {
         retry: false,
       })
   
-  if (!isError) {
+  if (isError) {
     return <Navigate to="/" />
   }
       
