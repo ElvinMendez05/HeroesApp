@@ -15,7 +15,7 @@ interface Props {
 export const HeroGridCard = ({hero}: Props) => {
   
   const navigate = useNavigate();
-  const {isFavorite, toggleFavorites, favorites} = use(FavoriteHeroContext)
+  const {isFavorite, toggleFavorites} = use(FavoriteHeroContext)
 
   const handleClick = () => {
     navigate(`/heroes/${hero.slug}`)
