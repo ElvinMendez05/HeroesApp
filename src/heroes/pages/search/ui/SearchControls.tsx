@@ -20,8 +20,9 @@ export const SearchControls = () => {
   const inputRef = useRef<HTMLInputElement>(null)
    
   const activeAccordion = searchParams.get('active-accordion') ?? '';
- 
-  const setQueryParams = (name: string, value: string) {
+  const selectedStrength = Number(searchParams.get('strength') ?? '0');
+
+  const setQueryParams = (name: string, value: string) => {
     setSearchParams((prev) => {
           prev.set(name, value);
           return prev;
@@ -52,7 +53,21 @@ export const SearchControls = () => {
 
           {/* Action buttons */}
           <div className="flex gap-2">
-            <Button variant="outline" className="h-12">
+            <Button variant={activeAccordion === 'advanced-filters' ? 'default' : 'outline'} 
+            className="h-12"
+             onClick={() => {
+               if (activeAccordion === 'advance-filters') {
+                setQueryParams('active-accordion', '');
+                // setSearchParams((prev) => {
+                //   prev.delete('active-accordion');
+                //   return prev;
+                // });
+                return;
+              }
+
+              setQueryParams('active-accordion', 'advanced-filters');
+             }}
+            >
               <Filter className="h-4 w-4 mr-2" />
               Filters
             </Button>
@@ -113,7 +128,14 @@ export const SearchControls = () => {
                   </div>
                   <div className="mt-4">
                     <label className="text-sm font-medium">Minimum Strength: 0/10</label>
-                    <Slider defaultValue={[33]} max={100} step={1} />
+                    <Slider
+                      defaultValue={[selectedStrength]}
+                      onValueChange={(value) =>
+                        setQueryParams('strength', value[0].toString())
+                      }
+                      max={10}
+                      step={1}
+                    />
                   </div>
                 </div>
 
