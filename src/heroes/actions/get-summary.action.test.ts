@@ -49,6 +49,4 @@ describe('getSummaryAction', () => {
             villainCount: expect.any(Number),
         });
     })
-
-
 })
